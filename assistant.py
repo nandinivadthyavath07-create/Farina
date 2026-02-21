@@ -78,15 +78,21 @@ def processcommand(command, display_callback):
         speak("Opening LinkedIn")
 
     elif command.startswith("play"):
-        try:
-            song = command.split(" ")[1]
-            link = musiclibrary.music[song]
-            webbrowser.open(link)
-            display_callback(f"FARINA: Playing {song}\n\n")
-            speak(f"Playing {song}")
-        except:
-            display_callback("FARINA: Song not found.\n\n")
-            speak("Song not found")
+        song = command.replace("play", "").strip().lower()
+
+        found = False
+
+        for key in musiclibrary.music:
+            if key in song.replace(" ", ""):
+                webbrowser.open(musiclibrary.music[key])
+                display_callback(f"FARINA: Playing {key}\n\n")
+                speak(f"Playing {key}")
+                found = True
+                break
+
+        if not found:
+            display_callback("FARINA: Song not found in library.\n\n")
+            speak("Song not found in library")
 
     elif "news" in command:
         display_callback("FARINA: Fetching latest news...\n\n")
