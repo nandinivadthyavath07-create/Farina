@@ -98,12 +98,11 @@ def processcommand(command, display_callback):
         display_callback("FARINA: Fetching latest news...\n\n")
         speak("Fetching latest news")
 
-        r = requests.get(
-            f"https://newsapi.org/v2/top-headlines?country=us&apiKey={newsapi}")
+        r = requests.get(f"https://newsapi.org/v2/top-headlines?country=us&apiKey={newsapi}")
 
         if r.status_code == 200:
             data = r.json()
-            articles = data.get("articles", [])[:5]
+            articles = data.get("articles", [])[:6]
 
             for article in articles:
                 headline = article["title"]
