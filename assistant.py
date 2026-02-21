@@ -124,9 +124,11 @@ def start_assistant(display_callback):
     while running:
         try:
             with sr.Microphone() as source:
-                audio = r.listen(source, timeout=2, phrase_time_limit=2)
+                r.adjust_for_ambient_noise(source, duration=0.5)
+                audio = r.listen(source)
 
             word = r.recognize_google(audio)
+            # display_callback("Heard: " + word + "\n\n")
 
             if "farina" in word.lower():
                 speak("Yes")
